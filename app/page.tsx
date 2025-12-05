@@ -1,65 +1,162 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { FaGithub, FaXTwitter, FaLinkedin, FaEnvelope } from "react-icons/fa6";
+import { SiLeetcode, SiHashnode } from "react-icons/si";
+import Link from "next/link";
+
+const socials = [
+  {
+    name: "GitHub",
+    url: "https://github.com/jerkeyray",
+    icon: FaGithub,
+    hoverColor: "#9333EA",
+  },
+  {
+    name: "X",
+    url: "https://x.com/jerkeyray",
+    icon: FaXTwitter,
+    hoverColor: "#1DA1F2",
+  },
+  // {
+  //   name: "LinkedIn",
+  //   url: "https://www.linkedin.com/in/aditya-srivastava-a943a8321/",
+  //   icon: FaLinkedin,
+  //   hoverColor: "#0077B5",
+  // },
+  {
+    name: "LeetCode",
+    url: "https://leetcode.com/u/0tMezaewYp/",
+    icon: SiLeetcode,
+    hoverColor: "#FFA116",
+  },
+  {
+    name: "Hashnode",
+    url: "https://jerkeyray.hashnode.dev",
+    icon: SiHashnode,
+    hoverColor: "#2962FF",
+  },
+];
 
 export default function Home() {
+  const [emailCopied, setEmailCopied] = useState(false);
+  const email = "srivastavya24@gmail.com";
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy email:", err);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="space-y-6 md:space-y-10 max-w-2xl mx-auto flex flex-col justify-center min-h-[calc(100vh-16rem)]">
+      <section className="space-y-4 md:space-y-8">
+        <h1 className="text-xl md:text-3xl font-bold tracking-tight">
+          hi, i&apos;m aditya.
+        </h1>
+
+        <div className="flex flex-wrap gap-2 md:gap-3 text-xs md:text-sm font-medium text-muted-foreground">
+          <span className="bg-muted/10 px-2 py-1 rounded text-accent">go</span>
+          <span className="text-muted-foreground/40 flex items-center">•</span>
+          <span className="bg-muted/10 px-2 py-1 rounded text-accent">
+            backend systems
+          </span>
+          <span className="text-muted-foreground/40 flex items-center">•</span>
+          <span className="bg-muted/10 px-2 py-1 rounded text-accent">
+            distributed systems
+          </span>
+          <span className="text-muted-foreground/40 flex items-center">•</span>
+          <span className="bg-muted/10 px-2 py-1 rounded text-accent">
+            developer tools
+          </span>
+        </div>
+
+        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
+          i learn by thinking from first principles, tinkering with the details
+          and abusing caffeine until things finally make sense. i mostly work
+          with <span className="text-accent">go</span>, exploring{" "}
+          <span className="text-foreground font-medium">backend systems</span>{" "}
+          through projects i build entirely from scratch —{" "}
+          <span className="text-foreground font-medium">interpreters</span>,{" "}
+          <span className="text-foreground font-medium">tiny data stores</span>,{" "}
+          <span className="text-foreground font-medium">rate limiters</span> and
+          other things that force me to understand what’s actually going on.
+        </p>
+
+        <div className="space-y-2 text-sm md:text-lg">
+          <p className="text-muted-foreground leading-relaxed">
+            <span className="text-accent font-medium">currently:</span>{" "}
+            exploring distributed systems, concurrency patterns, system
+            fundamentals and rust.
+          </p>
+
+          <p className="text-muted-foreground leading-relaxed">
+            you can find my finished projects{" "}
+            <Link
+              href="/projects"
+              className="text-accent hover:text-accent/80 underline decoration-accent underline-offset-4 transition-colors"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              here
+            </Link>
+            .
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
+
+      <div className="flex gap-4 pt-4">
+        {socials.map((social) => {
+          const Icon = social.icon;
+          return (
+            <a
+              key={social.name}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground transition-all duration-200 hover:scale-110"
+              style={{
+                color: "currentColor",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#f0a0c0";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "";
+              }}
+              aria-label={social.name}
+            >
+              <Icon size={25} />
+            </a>
+          );
+        })}
+        <button
+          onClick={copyEmail}
+          className="text-muted-foreground transition-all duration-200 hover:scale-110 cursor-pointer flex items-center bg-transparent border-none p-0"
+          style={{
+            color: emailCopied ? "#f0a0c0" : "currentColor",
+          }}
+          onMouseEnter={(e) => {
+            if (!emailCopied) {
+              e.currentTarget.style.color = "#f0a0c0";
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!emailCopied) {
+              e.currentTarget.style.color = "";
+            }
+          }}
+          aria-label="Copy email"
+        >
+          {emailCopied ? (
+            <span className="text-sm">copied</span>
+          ) : (
+            <FaEnvelope size={25} />
+          )}
+        </button>
+      </div>
     </div>
   );
 }

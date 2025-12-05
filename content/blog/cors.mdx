@@ -1,0 +1,237 @@
+---
+title: "CORS : The Browser Bouncers Explained"
+date: "2025-05-21"
+excerpt: "Learn about CORS in depth."
+published: true
+---
+## Why You Should Know About CORS
+
+Knowing CORS inside out doesn’t just make you feel smarter—it’s critical for **building secure systems on the internet**.
+
+**Cross-Origin Resource Sharing (CORS)** is like a big bouncer at the gate of your browser’s exclusive club, saying:
+
+> **“SORRY, YOU’RE NOT ON THE LIST.”**
+
+...to any uninvited requests.
+
+There are many ways to learn about CORS. In this blog, we’re **ditching the frontend perspective** (and the cybersecurity deep dive) to focus on:
+
+* **What CORS actually does**
+    
+* **Why it exists**
+    
+* How **you—the backend dev—are in charge of making it behave**
+    
+
+## The Same-Origin Policy (SOP)
+
+Before diving into CORS, let’s cover why it exists.
+
+The **Same-Origin Policy (SOP)** is a browser-enforced security rule that restricts how sites (technically, *origins*) interact. Without it, a site like [cutecatphotos.com](http://cutecatphotos.com) could make requests to your bank’s website and read private data just because you’re logged in. Not good.
+
+In short: SOP prevents websites from **reading data** from another site unless they share the same origin.
+
+### What’s an “Origin”?
+
+An **origin** combines:
+
+* **Scheme** (e.g., `http`, `https`)
+    
+* **Host** (e.g., [`example.com`](http://example.com))
+    
+* **Port** (e.g., `:3000`)
+    
+
+![Diagram of origin structure](/images/blog/cors/d1.png)
+
+Even a slight difference in any of these creates a different origin.
+
+The browser only allows full access between resources from the **same origin**.
+
+See the table below to understand what counts as “same origin”:
+
+![Table explaining same origin](/images/blog/cors/d2.png)
+
+### SOP Blocks Reads, Not Writes
+
+A common misconception: SOP doesn’t stop websites from **sending** data to other origins—only from **reading** the response.
+
+Your app can still:
+
+* Send a `POST` request
+    
+* Embed an image, script, or stylesheet from another origin
+    
+* Submit a form to a different domain
+    
+
+Why is this okay? Because you’re not seeing what comes back—you’re just tossing data over the wall.
+
+Try reading the response with `fetch()` or `XMLHttpRequest`? Blocked—**unless** the server explicitly allows it via CORS.
+
+### A Quick Analogy
+
+Think of SOP as sending a letter. You can mail it anywhere, no problem. But reading the reply? That’s locked—unless the recipient says:
+
+> “Yep, you’re allowed to read this.”
+
+That’s where **CORS** comes in.
+
+## What is CORS?
+
+**Cross-Origin Resource Sharing (CORS)** is the guest list for your browser’s club. It’s how a server tells the browser:
+
+> “Hey, this site is cool—let them read my stuff.”
+
+SOP blocks JavaScript from reading responses from other origins by default. **CORS is the exception—the permission slip** that tells the browser it’s safe to share.
+
+![Bouncer allowing trusted origin](/images/blog/cors/d3.png)
+
+### How Does CORS Work?
+
+When your browser tries to fetch data from a different origin, it sends an HTTP request with an `Origin` header, identifying where the request came from.
+
+The server checks this origin against its “allowed list” and responds with headers like:
+
+* `Access-Control-Allow-Origin`: Which origin(s) can access the resource
+    
+* `Access-Control-Allow-Credentials`: Whether cookies/credentials are allowed
+    
+
+If the server gives the green light, the browser lets your JavaScript access the response. If not, the browser blocks it and throws a CORS error in the console.
+
+## The Flow of a CORS Request
+
+CORS requests typically follow one of two flows: **simple** or **preflighted**.
+
+### Simple CORS Request Flow
+
+A **simple request** is a cross-origin `GET`, `POST`, or `HEAD` request using only basic headers (e.g., `Content-Type: text/plain`).
+
+#### Flow:
+
+1. The **browser adds an** `Origin` header to the request.
+    
+2. The **server checks the** `Origin` and, if allowed, responds with: `Access-Control-Allow-Origin: <origin>`.
+    
+3. The **browser inspects the response**. If the header is present and matches, JavaScript can read the response; otherwise, it’s blocked with a CORS error.
+    
+
+Even simple requests are subject to CORS enforcement if the response lacks proper headers.
+
+### Preflighted CORS Request Flow
+
+A **preflight request** occurs when the browser sends an `OPTIONS` request to check if the actual request is safe. This happens for methods other than `GET`, `POST`, or `HEAD`, or when custom headers are used.
+
+#### Flow:
+
+1. The **browser sends an** `OPTIONS` request with `Origin`, `Access-Control-Request-Method`, and `Access-Control-Request-Headers`.
+    
+2. The **server responds with allowed origins, methods, and headers** via:
+    
+    * `Access-Control-Allow-Origin`
+        
+    * `Access-Control-Allow-Methods`
+        
+    * `Access-Control-Allow-Headers`
+        
+3. If the preflight response allows it, the **browser sends the actual request**.
+    
+4. The **server responds with the data**, including `Access-Control-Allow-Origin`.
+    
+5. The **browser allows JavaScript to read the response** only if headers match; otherwise, it throws a CORS error.
+    
+
+This extra step ensures servers are protected from unsafe requests by verifying permissions first.
+
+## Dynamic Origin Whitelisting: Don’t Let Your CORS Be a Pushover
+
+Imagine your server’s a VIP club, and CORS is the bouncer checking IDs. If the bouncer just *trusted* every ID without a guest list, you’d have chaos. That’s what happens when you blindly set `Access-Control-Allow-Origin` to any origin that knocks. Let’s break down why this is a rookie mistake and how to lock it down.
+
+### The Rookie Mistake: Blindly Trusting Origins
+
+Here’s the kind of code that you don't want to write:
+
+```javascript
+res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+```
+
+This is like your bouncer saying, “Sure, [`shadyhacker.com`](http://shadyhacker.com), you’re legit!” It takes the `Origin` header from *any* request and mirrors it back. Why’s this bad? Because *anyone* can fake an `Origin` header. A malicious site like [`evil.com`](http://evil.com) could get approved and read your server’s response, potentially stealing sensitive data like user info or session tokens. It’s like handing out backstage passes to every rando in the crowd.
+
+### The Pro Gamer Move: Whitelist Like You Mean It
+
+As the backstage manager, only let trusted origins in with a whitelist:
+
+```javascript
+const whitelist = ["https://trusted.com"];
+const origin = req.headers.origin;
+if (origin && whitelist.includes(origin)) {
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Vary", "Origin");
+}
+```
+
+This code is your bouncer with a clipboard, checking every origin against a VIP list. Only [`https://trusted.com`](https://trusted.com) gets in. If [`dodgy.net`](http://dodgy.net) tries to sneak through? Access denied. The browser sees no `Access-Control-Allow-Origin` (or one that doesn’t match), and the response stays locked.
+
+**Pro tip**: Hardcode the whitelist or load it from a secure config. Never let user input touch it. Keep the list tight—every extra origin is another
+
+door left ajar.
+
+## Practical Backend Guidelines: Be the Boss of Your CORS
+
+You’re running the show, so don’t let CORS be the weak link that trashes your club. Here are five golden rules to keep your server secure and users happy:
+
+### 1\. Always Validate the Origin
+
+Never trust the `Origin` header blindly. Use a whitelist to check every request. If the origin isn’t on your VIP list, don’t set `Access-Control-Allow-Origin`. This keeps [`shadyhacker.com`](http://shadyhacker.com) out.
+
+### 2\. Don’t Use `*` with Credentials
+
+Setting `Access-Control-Allow-Origin: *` is like leaving the club door wide open—fine for public data, but a disaster with cookies or auth tokens. If you need `Access-Control-Allow-Credentials: true`, specify an exact origin (e.g., [`https://trusted.com`](https://trusted.com)). Mixing `*` with credentials? The browser will block the request.
+
+```javascript
+const whitelist = ["https://trusted.com"];
+const origin = req.headers.origin;
+if (origin && whitelist.includes(origin)) {
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Vary", "Origin");
+}
+```
+
+## Misconceptions About CORS: Don’t Get It Twisted
+
+CORS can be tricky, and plenty of devs get the wrong idea. Let’s clear up some myths so you don’t look like a rookie at the next dev meetup.
+
+### CORS Isn’t About Authentication or Authorization
+
+CORS doesn’t care who’s logged in or if they have the right API key. It’s just the browser checking if one origin can *read* data from another. Your server still needs to handle auth and permissions. Think of CORS as the club’s guest list, not the VIP pass—your backend still checks IDs at the bar.
+
+### CORS Protects the Browser, Not Your Backend
+
+CORS is a browser mechanism, not a server fortress. It stops [`shadyapp.com`](http://shadyapp.com) from reading your server’s response in a user’s browser, but it doesn’t stop requests from hitting your server. Your backend needs proper auth to keep the riffraff out.
+
+### Non-Browser Clients Don’t Care About CORS
+
+Tools like `curl` or Postman ignore CORS entirely—they’re not browsers. They’ll hit your server and get the response, no questions asked. This is why CORS alone isn’t enough for security—it’s like expecting the bouncer to stop people sneaking through the back alley.
+
+**Pro tip**: Assume your server’s getting hit directly. CORS is the browser’s gatekeeper, not your backend’s bodyguard.
+
+## Conclusion: CORS is Negotiation, Not Defense
+
+CORS isn’t your server’s shield—it’s a handshake between your backend and the browser, ensuring safe cross-origin sharing. As the backend boss, you write the guest list, deciding who reads your data and how. Get it right, and you enable smooth, secure apps that play nice across domains. Get it wrong, and you’re either locking out legit users or letting [`evil.com`](http://evil.com) sneak into the VIP lounge.
+
+Understanding CORS doesn’t just make you a better dev—it saves you from those soul-crushing “CORS error” bug reports and keeps your app’s users dancing. So, set those headers, test your setup, and run your club like a pro. Your server’s got this.
+
+## Further Reading
+
+Want to dive deeper into CORS? Check out these resources for more technical details and best practices:
+
+* [Siriniously's Understanding HTTP for beginners](https://www.youtube.com/watch?v=a3C1DMswClQ&list=PLui3EUkuMTPgZcV0QhQrOcwMPcBCcd_Q1&index=11)
+    
+* [Rana Khalil's CORS guide](https://www.youtube.com/watch?v=t5FBwq-kudw)
+    
+
+## Conclusion
+
+This was my first try at writing a technical blog and I am by no means an expert in the field, this is just a topic I happened to dive deeper into than I needed to and wanted to share what I thought might help. Still I hope you guys enjoyed it :)

@@ -13,6 +13,14 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    files: ["app/blog/**/*.tsx"],
+    rules: {
+      // Allow contentlayer's useMDXComponent pattern which creates components during render
+      // This is the standard pattern for contentlayer and is safe
+      "@next/next/no-img-element": "warn", // Allow img in MDX content
+    },
+  },
 ]);
 
 export default eslintConfig;

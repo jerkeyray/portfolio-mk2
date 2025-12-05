@@ -1,0 +1,108 @@
+---
+title: "Why 0.1 + 0.2 isn't always 0.3 : Floating Point Explained"
+date: "2025-06-18"
+excerpt: "Explained Floating Point in Detail"
+published: true
+---
+Go ahead and type out `0.1 + 0.2` in your IDE. You expect `0.3`, but instead, you get `0.30000000000000004`. You stare at the screen, knowing something’s off. Is your computer broken? Is your code faulty? Well, news flash, it's intentional and it's all a part of floating point arithmetic. In this blog, we’ll look into why floating-point numbers behave this way, how computers represent them, and the real-world situations where precision is critical.
+
+Let’s start with a quick experiment. Run this Python code:
+
+```python
+print(0.1 + 0.2)
+# Output: 0.30000000000000004
+```
+
+Notice that tiny `0.00000000000000004` trailing at the end of `0.1 + 0.2`? That’s not a bug—it’s a fundamental quirk of how computers deal with decimal numbers. Computers don’t naturally understand decimals the way humans do; they speak **binary**, and most decimal numbers, like 0.1, are messy in that world. Enter **floating-point arithmetic**, the system computers use to approximate real numbers (like 3.14 or 0.001). It’s a clever workaround, but it comes with a catch: **it's not precise**. Because computers can’t store most decimals exactly, these tiny errors can lead to surprising results.
+
+## Why Precision Is an Illusion
+
+To understand why `0.1 + 0.2 might not always be 0.3` , let’s think about fractions.
+
+![analogy on why these errors kinda compound](/images/blog/floatingpoint/d1.png)
+
+(pardon the shit hand writing)
+
+If you limit precision to, say, four decimal places, you get `0.9999` instead of `1`. Computers face a similar problem when converting decimal numbers to **binary**. Numbers like `0.1` and `0.2` look simple in base-10, but in binary, they become infinite repeating fractions. For example:
+
+* `0.1` in binary is approximately `0.000110011001100...`
+    
+* `0.2` in binary is approximately `0.00110011001100...`
+    
+
+Computers use a finite number of bit's to store these numbers, so they’re rounded off, leading to small errors. When you add `0.1 + 0.2`, those tiny errors combine, giving you `0.30000000000000004`.
+
+## The IEEE 754 Standard
+
+How do computers manage to store a vast, infinite range of numbers with just a handful of bits? Meet the **IEEE 754 standard**, the clever blueprint behind floating-point arithmetic in nearly all modern computers. Think of IEEE 754 as a clever packing system that squeezes an infinite range of numbers into just 32 or 64 bits.
+
+Let’s break down how IEEE 754 works with a simplified 32-bit example (real systems often use 64 bits for more precision):
+
+* **Sign bit (1 bit)**: Indicates positive (`0`) or negative (`1`).
+    
+* **Exponent (8 bits)**: Represents the scale of the number (like (2^n) in scientific notation).
+    
+* **Mantissa (23 bits)**: Stores the significant digits.
+    
+
+The catch? Only a limited number of bits are available, so most numbers are approximations. IEEE 754 also defines special values like:
+
+* **NaN** (Not a Number): For invalid operations like `0/0`.
+    
+* **Infinity**: For numbers too large to represent.
+    
+* **\-0**: A negative zero, distinct from positive zero.
+    
+
+The biased exponent in IEEE 754 adds a constant (like 127 for 32-bit) to the raw exponent, shifting it to a positive range for storage. This allows representation of both positive and negative powers of 2 within the 8-bit exponent field.
+
+![IEEE 754 explained](/images/blog/floatingpoint/d2.png)
+
+![IEEE 754 explained](/images/blog/floatingpoint/d3.png)
+
+(this blog ain't about IEEE-754 cause that's a big topic to go into by itself but there's a very cool video explaining such compression algorithms for anyone interested linked at the end)
+
+## Real-World Impacts of Floating-Point Errors
+
+You might think, “Who cares about a tiny error like `0.00000000000000004`?” For many applications, like video games or weather simulations, these errors are negligible. But in some fields, they can be catastrophic. Here are some real-world examples:
+
+### 1\. Financial Systems
+
+In finance, tiny floating-point errors can add up fast. A bank processing millions of transactions might see small discrepancies, like 0.1 + 0.2 yielding 0.30000000000000004, causing significant losses or overcharges. To avoid this, financial systems often use fixed-point arithmetic or specialised libraries for exact decimal calculations.
+
+### 2\. Scientific Computing
+
+In scientific simulations, like climate modelling, floating-point errors can distort results. Small miscalculations in iterative processes may predict clear skies when a storm is coming. Scientists use high-precision formats and error-correction methods to minimise these issues.
+
+### 3\. Aerospace and Engineering
+
+In aerospace, precision is critical. The 1991 Patriot Missile failure, where a 0.1-second timing error grew due to floating-point rounding in a 24-bit system, led to a deadly miss.
+
+![photo of article on patriot missile failiure](/images/blog/floatingpoint/d4.png)
+
+### 4\. Machine Learning
+
+Machine learning models perform billions of calculations, and floating-point errors can affect accuracy. Using lower-precision formats for efficiency can lead to unstable training, so techniques like mixed-precision training balance speed and reliability.
+
+## Handling Floating-Point Errors
+
+Those tiny errors, like 0.1 + 0.2 giving 0.30000000000000004, can trip you up. Here’s how to stay out of trouble:
+
+* Use **fixed-point arithmetic** or **decimal libraries** for money-related stuff where precision is critical.
+    
+* Avoid comparing floats directly. Check if the difference is within a small **epsilon** (like 0.000000001).
+    
+* Use **higher precision types** (like float64) when accuracy matters more than speed.
+    
+* Test carefully when building systems that rely on precision, like aerospace or scientific applications.
+    
+
+## Conclusion
+
+Floating-point arithmetic isn’t a perfect. It’s more like a clever negotiation between your code and the computer’s binary brain. That annoying `0.00000000000000004` when adding `0.1 + 0.2` shows the system’s limits, but the IEEE 754 standard still manages to cram an infinite range of numbers into a few bits.
+
+## Further Reading
+
+I did a shit job at explaining this stuff so just go and look at these videos for a better explanation:
+
+[This dude implemented IEEE 754 in JS](https://youtu.be/wPBjd-vb9eI?si=3ipOPzeFrrnoAO74) [Tom Scott explains it like Tom Scott](https://youtu.be/PZRI1IfStY0?si=RknxesFfqbpyCGsa)
