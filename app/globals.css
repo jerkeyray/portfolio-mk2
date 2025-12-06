@@ -27,6 +27,7 @@ body {
   /* Enforce monospace for the typewriter feel */
   font-family: var(--font-geist-mono), "Courier New", Courier, monospace;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
 }
 
 h1,
@@ -74,7 +75,7 @@ nav ul li a:hover:not(.text-accent) {
 .prose {
   color: var(--foreground);
   max-width: 100ch; /* Wider reading width */
-  line-height: 1.75;
+  line-height: 1.8;
   font-size: 0.9375rem; /* 15px base, smaller on mobile */
 }
 
@@ -92,7 +93,7 @@ nav ul li a:hover:not(.text-accent) {
   font-weight: 700;
   margin-top: 2.5rem;
   margin-bottom: 1.25rem;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .prose h1 {

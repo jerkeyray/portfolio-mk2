@@ -3,16 +3,41 @@ import { Github, ExternalLink } from "lucide-react";
 import { projects } from "../../data/projects";
 import type { Metadata } from "next";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.dev";
+
 export const metadata: Metadata = {
-  title: "jerkeyray | projects",
+  title: "projects",
   description:
     "Projects built with Go, exploring backend systems and distributed systems",
+  openGraph: {
+    type: "website",
+    url: `${siteUrl}/projects`,
+    title: "projects | jerkeyray",
+    description:
+      "Projects built with Go, exploring backend systems and distributed systems",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "jerkeyray projects",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "projects | jerkeyray",
+    description:
+      "Projects built with Go, exploring backend systems and distributed systems",
+    images: ["/og-image.png"],
+    creator: "@jerkeyray",
+  },
 };
 
 export default function Projects() {
   return (
-    <div className="space-y-8 max-w-6xl mx-auto pt-20 md:pt-0">
-      <h1 className="text-4xl font-bold tracking-tight">projects</h1>
+    <div className="space-y-8 max-w-6xl mx-auto pt-20">
+      <h1 className="text-xl md:text-3xl font-bold tracking-tight">projects</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, index) => (

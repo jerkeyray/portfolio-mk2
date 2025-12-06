@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaGithub, FaXTwitter, FaLinkedin, FaEnvelope } from "react-icons/fa6";
 import { SiLeetcode, SiHashnode } from "react-icons/si";
 import Link from "next/link";
@@ -42,6 +42,18 @@ export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false);
   const email = "srivastavya24@gmail.com";
 
+  useEffect(() => {
+    // Prevent scrolling on the about page
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      // Re-enable scrolling when leaving the page
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
@@ -53,8 +65,8 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-6 md:space-y-10 max-w-2xl mx-auto flex flex-col justify-center min-h-[calc(100vh-16rem)]">
-      <section className="space-y-4 md:space-y-8">
+    <div className="max-w-2xl mx-auto flex flex-col justify-center h-[calc(100vh-5rem)] md:h-screen pt-20 md:pt-0 px-4 overflow-hidden max-h-[calc(100vh-5rem)] md:max-h-screen">
+      <section className="space-y-3 md:space-y-6 lg:space-y-8">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">
           hi, i&apos;m aditya.
         </h1>
@@ -84,7 +96,8 @@ export default function Home() {
           <span className="text-foreground font-medium">interpreters</span>,{" "}
           <span className="text-foreground font-medium">tiny data stores</span>,{" "}
           <span className="text-foreground font-medium">rate limiters</span> and
-          other things that force me to understand what’s actually going on.
+          other things that force me to understand what&apos;s actually going
+          on.
         </p>
 
         <div className="space-y-2 text-sm md:text-lg">

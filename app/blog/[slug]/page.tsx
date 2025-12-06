@@ -10,6 +10,8 @@ export async function generateStaticParams() {
   }));
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.dev";
+
 export async function generateMetadata({
   params,
 }: {
@@ -19,9 +21,41 @@ export async function generateMetadata({
   const post = allPosts.find((post) => post.slug === slug);
   if (!post) return {};
 
+  const postUrl = `${siteUrl}${post.url}`;
+  const publishedTime = new Date(post.date).toISOString();
+
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      type: "article",
+      url: postUrl,
+      title: post.title,
+      description: post.excerpt,
+      publishedTime,
+      authors: ["jerkeyray"],
+      images: [
+        {
+          url: `/images/blog/${post.slug}/og-image.png`, // Optional: per-post OG images
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+        {
+          url: "/og-image.png", // Fallback to default
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [`/images/blog/${post.slug}/og-image.png`, "/og-image.png"],
+      creator: "@jerkeyray", // Update with your Twitter handle
+    },
   };
 }
 
