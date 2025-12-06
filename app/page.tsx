@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaGithub, FaXTwitter, FaLinkedin, FaEnvelope } from "react-icons/fa6";
+import { FaGithub, FaXTwitter, FaEnvelope } from "react-icons/fa6";
 import { SiLeetcode, SiHashnode } from "react-icons/si";
 import Link from "next/link";
 
@@ -65,24 +65,26 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto flex flex-col justify-center h-[calc(100vh-5rem)] md:h-screen pt-20 md:pt-0 px-4 overflow-hidden max-h-[calc(100vh-5rem)] md:max-h-screen">
-      <section className="space-y-3 md:space-y-6 lg:space-y-8">
+    <div className="max-w-2xl mx-auto flex flex-col justify-start md:justify-center h-[calc(100vh-5rem)] md:h-screen pt-16 md:pt-0 pb-10 px-4 overflow-hidden max-h-[calc(100vh-5rem)] md:max-h-screen">
+      <section className="space-y-4 md:space-y-6 lg:space-y-8">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">
           hi, i&apos;m aditya.
         </h1>
 
-        <div className="flex flex-wrap gap-2 md:gap-3 text-xs md:text-sm font-medium text-muted-foreground">
-          <span className="bg-muted/10 px-2 py-1 rounded text-accent">go</span>
+        <div className="flex flex-wrap items-center gap-1.5 md:gap-3 text-[10px] md:text-sm font-medium text-muted-foreground">
+          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
+            go
+          </span>
           <span className="text-muted-foreground/40 flex items-center">•</span>
-          <span className="bg-muted/10 px-2 py-1 rounded text-accent">
+          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
             backend systems
           </span>
           <span className="text-muted-foreground/40 flex items-center">•</span>
-          <span className="bg-muted/10 px-2 py-1 rounded text-accent">
+          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
             distributed systems
           </span>
           <span className="text-muted-foreground/40 flex items-center">•</span>
-          <span className="bg-muted/10 px-2 py-1 rounded text-accent">
+          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
             developer tools
           </span>
         </div>
