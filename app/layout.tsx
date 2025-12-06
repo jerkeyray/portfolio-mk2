@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { Analytics } from "@vercel/analytics/next"
+import Script from "next/script";
 import Navbar from "./components/Navbar";
 import "./globals.css";
 
@@ -16,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.com"; // Update this with your actual domain
+const GA_MEASUREMENT_ID = "G-0TGDV4RME6";
 
 export const metadata: Metadata = {
   title: {
@@ -70,11 +70,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased px-6 py-10 min-h-screen flex flex-col`}
       >
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <Script id="gtag-init">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <header>
           <Navbar />
         </header>
         <main className="flex-1">{children}</main>
-        <GoogleAnalytics gaId="G-XYZ123456" />
       </body>
     </html>
   );
