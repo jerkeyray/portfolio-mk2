@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next"
 import Navbar from "./components/Navbar";
 import "./globals.css";
 
@@ -72,6 +74,7 @@ export default function RootLayout({
           <Navbar />
         </header>
         <main className="flex-1">{children}</main>
+        <GoogleAnalytics gaId="G-XYZ123456" />
       </body>
     </html>
   );
