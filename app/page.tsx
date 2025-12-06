@@ -122,7 +122,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flex gap-4 pt-4">
+      <div className="flex gap-4 pt-6 md:pt-8">
         {socials.map((social) => {
           const Icon = social.icon;
           return (
