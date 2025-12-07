@@ -70,7 +70,6 @@ export default function Home() {
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">
           hi, i&apos;m aditya.
         </h1>
-
         <div className="flex flex-wrap items-center gap-1.5 md:gap-3 text-[10px] md:text-sm font-medium text-muted-foreground">
           <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
             go
@@ -88,6 +87,10 @@ export default function Home() {
             developer tools
           </span>
         </div>
+
+        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
+          18 y/o pursuing bachelors in cs at vit vellore.
+        </p>
 
         <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
           i learn by thinking from first principles, tinkering with the details
