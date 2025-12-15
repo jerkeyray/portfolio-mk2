@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaGithub, FaXTwitter, FaEnvelope } from "react-icons/fa6";
-import { SiLeetcode, SiHashnode } from "react-icons/si";
+import { SiLeetcode, SiHashnode, SiBuymeacoffee } from "react-icons/si";
 import Link from "next/link";
 
 const socials = [
@@ -36,23 +36,17 @@ const socials = [
     icon: SiHashnode,
     hoverColor: "#2962FF",
   },
+  {
+    name: "Buy Me a Coffee",
+    url: "https://www.buymeacoffee.com/jerkeyray",
+    icon: SiBuymeacoffee,
+    hoverColor: "#FFDD00",
+  },
 ];
 
 export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false);
   const email = "srivastavya24@gmail.com";
-
-  useEffect(() => {
-    // Prevent scrolling on the about page
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      // Re-enable scrolling when leaving the page
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    };
-  }, []);
 
   const copyEmail = async () => {
     try {
@@ -65,7 +59,7 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto flex flex-col justify-start md:justify-center h-[calc(100vh-5rem)] md:h-screen pt-16 md:pt-0 pb-10 px-4 overflow-hidden max-h-[calc(100vh-5rem)] md:max-h-screen">
+    <div className="max-w-2xl mx-auto flex flex-col justify-start md:justify-center min-h-screen pt-16 md:pt-0 pb-10 px-4">
       <section className="space-y-4 md:space-y-6 lg:space-y-8">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">
           hi, i&apos;m aditya.

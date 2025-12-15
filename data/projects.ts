@@ -17,6 +17,13 @@ export const projects: Project[] = [
     repoLink: "https://github.com/jerkeyray/pika-interpreter.git",
   },
   {
+    title: "Mimori",
+    description:
+      "distributed kv store built in go using the raft consensus algorithm. explores leader election, log replication, snapshots, membership changes and observability.",
+    tags: ["Go", "Raft", "Prometheus", "Grafana"],
+    repoLink: "https://github.com/jerkeyray/mimori.git",
+  },
+  {
     title: "Yudoku",
     description:
       "course delivery web app built with next.js and typescript. focuses on video flow, auth and basic content management.",
@@ -26,7 +33,6 @@ export const projects: Project[] = [
       "Supabase",
       "Prisma",
       "Tailwind CSS",
-      "PostgreSQL",
     ],
     sourceLink: "https://yudoku.jerkeyray.com/",
     repoLink: "https://github.com/jerkeyray/youtube-course-platform",
@@ -62,7 +68,8 @@ export const projects: Project[] = [
   },
   {
     title: "GoStore",
-    description: "redis style key value store written in go. built from scratch to learn request handling, in-memory storage and simple concurrency behavior.",
+    description:
+      "redis style key value store written in go. built from scratch to learn request handling, in-memory storage and simple concurrency behavior.",
     tags: ["Go"],
     repoLink: "https://github.com/jerkeyray/gostore.git",
   },
