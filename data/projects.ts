@@ -10,18 +10,18 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "Mimori",
+    description:
+      "distributed kv store built in go using the raft consensus algorithm. explores leader election, log replication, snapshots, membership changes and observability.",
+    tags: ["Go", "Raft", "gRPC", "Prometheus", "Grafana"],
+    repoLink: "https://github.com/jerkeyray/mimori.git",
+  },
+  {
     title: "Pika Language Interpreter",
     description:
       "interpreter for a toy programming language written in go. built to learn parsing, evaluation and basic language design.",
     tags: ["Go"],
     repoLink: "https://github.com/jerkeyray/pika-interpreter.git",
-  },
-  {
-    title: "Mimori",
-    description:
-      "distributed kv store built in go using the raft consensus algorithm. explores leader election, log replication, snapshots, membership changes and observability.",
-    tags: ["Go", "Raft", "Prometheus", "Grafana"],
-    repoLink: "https://github.com/jerkeyray/mimori.git",
   },
   {
     title: "Yudoku",
