@@ -102,8 +102,8 @@ export default function Home() {
         <div className="space-y-2 text-sm md:text-lg">
           <p className="text-muted-foreground leading-relaxed">
             <span className="text-accent font-medium">currently:</span>{" "}
-            exploring distributed systems, concurrency patterns, system
-            fundamentals and rust.
+            exploring distributed systems, concurrency patterns and system
+            fundamentals.
           </p>
 
           <p className="text-muted-foreground leading-relaxed">
