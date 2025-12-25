@@ -26,7 +26,7 @@ export const projects: Project[] = [
   {
     title: "Yudoku",
     description:
-      "course delivery web app built with next.js and typescript. focuses on video flow, auth and basic content management.",
+      "a focused learning web app that turns youtube playlists into structured, finite courses. designed around progress, flow, and completion rather than engagement.",
     tags: [
       "Typescript",
       "Next.js",
@@ -35,7 +35,7 @@ export const projects: Project[] = [
       "Tailwind CSS",
     ],
     sourceLink: "https://yudoku.jerkeyray.com/",
-    repoLink: "https://github.com/jerkeyray/youtube-course-platform",
+    repoLink: "https://github.com/jerkeyray/yudoku",
   },
   {
     title: "Dory",
