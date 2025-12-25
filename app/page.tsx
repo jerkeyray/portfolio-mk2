@@ -107,13 +107,14 @@ export default function Home() {
           </p>
 
           <p className="text-muted-foreground leading-relaxed">
-            you can find my finished projects{" "}
-            <Link
-              href="/projects"
+            you can find my resume{" "}
+            <a
+              href="/aditya_srivastava_resume.pdf"
+              download="aditya_srivastava_resume.pdf"
               className="text-accent hover:text-accent/80 underline decoration-accent underline-offset-4 transition-colors"
             >
               here
-            </Link>
+            </a>
             .
           </p>
         </div>
