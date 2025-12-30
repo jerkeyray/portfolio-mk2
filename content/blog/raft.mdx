@@ -8,7 +8,7 @@ published: true
 Just like people, making independent nodes agree on anything is surprisingly hard. In a distributed system, many things can go wrong and they do go wrong: networks partition, nodes crash, messages arrive late or out of order and clocks refuse to agree on what time it is. All these problems make the system unable to agree on a single, consistent state.
 This is where consensus comes in. 
 
-In this blog we'll be going over why consensus is necessary, how Raft approaches this problem and all the things that go into making distributed systems agree. This is a no-code language-agnostic walkthrough and focuses more on the why than the how.
+In this post, we'll be cover why consensus is necessary, how Raft approaches this problem and all the things that go into making distributed systems agree. This is a no-code language-agnostic walkthrough and focuses more on the why than the how.
 
 ## why agreement is a problem
 
@@ -20,7 +20,7 @@ Making these systems agree seems straightforward at first glance. Just have one 
 
 - **Networks are unreliable.** Messages get delayed, dropped, or arrive out of order. A node might send a message and never get to know whether it was received, processed or ignored. From the sender's POV, silence is the same as failure.
 
-- **Node failures.** A node could be halfway through handling  a request and just die. Worse it might come back with a stale state and have no idea what's going on.
+- **Node failures.** A node could be halfway through handling  a request and just die. Worse, it might come back with a stale state and have no idea what's going on.
 
 - **Time is not shared.** This is a whole other rabbit hole we can dive deep into some other time but agreeing on the current time has always been a tough nut to crack in computer science. Machines can sit next to each other and still disagree what the correct time is, because clocks drift and there is still no absolute notion of time. 
 
@@ -55,31 +55,31 @@ The algorithm must satisfy these three conditions:
 
 **Agreement** - All correct nodes agree on the same value. 
 
-**Validity** - The decided value must actually be proposed by a node (i.e the system cannot just make up values).
+**Validity** - If a value is decided, then it must have been proposed by some node. (i.e the system cannot just make up values).
 
 **Termination** - Every non-faulty node must eventually reach a decision. 
 
-agreement resists divergence. validity resists fabrication. termination resists deadlock.
-
 These three properties are the minimum requirements a consensus algorithm must satisfy.
+
+**agreement resists divergence. validity resists fabrication. termination resists deadlock.**
 
 This is where Raft comes in.
 
-### the CAP theorem
+### CAP theorem
 
 The fundamental constraint of distributed systems that states a distributed data store can only provide two of the following three guarantees at the same time.
 
 **Consistency** - All nodes see the same data at the same time.
 
-**Availability** - Each request receives a response, even if it's not the latest.
+**Availability** - Every request receives a response, even if it's not the latest.
 
 **Partition Tolerance** - The system continues to operate despite network splits.
 
 In real-world systems, partitions are not optional. Networks fail. Machines lose connectivity. So Partition Tolerance isn’t a design choice, it’s a requirement. Once you accept that, you’re left with a tradeoff between Consistency and Availability.
 
-**Raft chooses Consistency over Availability.**
+**Raft chooses consistency over availability when network partitions occur because inconsistent data is catastrophic but unavailability is just a nuisance.**
 
-When the system can not guarantee a consistent view of state, it refuses to proceed. It will stop accepting writes rather than risk diverging histories.
+When the system cannot guarantee a consistent view of state, it refuses to proceed. It will stop accepting writes rather than risk diverging histories.
 
 So, going back to the banking problem. If the system cannot be certain about the order of operations, it would rather reject both withdrawals than allow an incorrect balance to exist.
 
@@ -88,15 +88,15 @@ We maintain correctness instead of maximising uptime.
 ## before raft
 
 The standard for consensus was an algorithm called **Paxos**.
-While it's mathematically proven and brilliant, Paxos is notoriously difficult to understand even harder to implement.
+While it's mathematically proven correct, Paxos is notoriously difficult to understand and even harder to implement.
 
-If an algorithm is too complex for engineers to reason about, they will implement it with bugs. Raft achieves the same performance and safety as Paxos but is easier for people to reason about. 
+If an algorithm is too complex for engineers to reason about, they will implement it with bugs. Raft achieves the same performance and safety as Paxos while not making engineers bash their heads. 
 
 ## raft: the mental model
 
 Now that we have clearly defined what problem consensus solves and what it is, we can finally talk about the mechanism behind it.
 
-Raft is built around the concept of a Replicated State Machine(RSM).
+Raft is built around the concept of a **Replicated State Machine (RSM)**.
 
 The idea is simple: if you have two deterministic state machines and you feed them the exact same sequence of inputs, they will end up in the exact same state.
 
@@ -108,9 +108,9 @@ It is Raft's job to ensure each node has the same log.
 
 We've already discussed how real clocks are unreliable in distributed systems. Hence we need a different mechanism to order events across different machines. Raft fixes this by introducing the concept of a term.
 
-Time in Raft is not measured in seconds, but in leadership epochs. 
+Time in Raft is not measured in seconds, but in **terms**. 
 
-A term is a monotonically increasing number that acts a clock for the cluster.
+A term is a monotonically increasing number that acts as a clock for the cluster.
 
 **Each term begins with a leadership election. Every message carries a term number. Nodes always defer to messages with the higher term.**
 
@@ -125,13 +125,13 @@ Each node starts as a follower. If it doesn't hear the leader's heartbeat in a w
 This node becomes a candidate:
 - It increments its own term.
 - Votes for itself.
-- Requests vote from other nodes.
+- Requests votes from other nodes.
 
 The other node will grant its vote if:
 - The candidate's term is at least as up-to-date as its own.
 - It hasn't already voted in that term for someone else.
 
-If a candidate receives the majority of votes (quorum), it becomes the leader and starts sending heartbeats to the other nodes to assert dominance.
+If a candidate receives the majority of the votes (quorum), it becomes the leader and starts sending heartbeats to the other nodes to assert dominance.
 
 Randomised timeouts reduce the chances of multiple nodes starting their elections simultaneously, which prevents deadlocks.
 
@@ -143,9 +143,9 @@ When a client sends a request:
 1) The leader appends this operation to its local log.
 2) It sends the new entry to its followers via `AppendEntries` messages.
 3) Followers append the entry if it matches their log.
-4) Once a majority have acknowledged the entry, it is considered committed.
+4) Once a majority have acknowledged the entry, it is committed.
 
-If two nodes contain entry with the same index and term, then all the logs are identical in all entries before that point.
+If two nodes contain an entry with the same index and term, then their logs are identical.
 
 This makes sure that if an entry is committed:
 - no future leader can change it.
@@ -175,11 +175,11 @@ Raft assumes that the machine state survives process restarts. Without this a no
 
 At the very minimum, each node must persist:
 
-**currentTerm**: to ensure it never goes back in time.
+**currentTerm:** to ensure it never goes back in time.
 
-**votedFor** : so it doesn't vote twice in the same term.
+**votedFor:** so it doesn't vote twice in the same term.
 
-**the log** : because obviously.
+**the log:** because obviously.
 
 These must be written to a stable storage before a node acknowledges anything to the rest of the cluster i.e. a node shouldn't be responding before persisting else we risk the system having an inconsistent state.
 
@@ -218,7 +218,7 @@ Followers only accept an entry if their own log matches the leader's up until th
 
 ### handling retries
 
-Clients always send their requests to the leader. If a client contacts a follower instead, the request will be redirected to leader or outright rejected itself.
+Clients always send their requests to the leader. If a client contacts a follower instead, the request will be redirected to leader or outright rejected.
 
 This ensures all state changes happen through a single authority.
 
@@ -227,7 +227,7 @@ Suppose a client sends the leader a request, and the leader crashes before respo
 To handle this, the system relies on **idempotency**:
 - clients attach a unique id to each request.
 - server tracks which request has been applied.
-- duplicate requests can be safely ignored.
+- duplicate requests get ignored.
 
 This ensures that retries never result in duplicated state changes.
 
@@ -267,7 +267,7 @@ Once the new configuration is established, the old one is safely discarded.
 
 I recently built my own Raft-based distributed KV store called **Mimori**. This post is my attempt to answer all the questions i had while trying to make sense of Raft. 
 
-Distributed systems aren’t mystical or magical, they’re just unforgiving. Most of the complexity comes from dealing with failure, uncertainty, and imperfect information. Once you accept that, the ideas start to feel surprisingly grounded and mechanical.
+The point of this boring post was to make Raft feel boring to you, because that's exactly what it is. I won't sit and pretend like this is some mystical and impressive tech when it's not. Distributed systems are grounded and mechanical by design and that's exactly why they work.
 
 Anyway, that’s it for me. Hope you got something out of this. 
 Thanks for reading. See ya :)
