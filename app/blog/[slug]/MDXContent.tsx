@@ -22,9 +22,21 @@ const MDXImage = (props: ComponentPropsWithoutRef<"img">) => {
 const mdxComponents = {
   Image: MDXImage,
   img: MDXImage,
-  a: (props: ComponentPropsWithoutRef<"a">) => (
-    <a {...props} className="text-accent underline underline-offset-4" />
-  ),
+  a: (props: ComponentPropsWithoutRef<"a">) => {
+    const { rel, ...rest } = props;
+    const safeRelParts = new Set(
+      `${rel ?? ""} noopener noreferrer`.trim().split(/\s+/)
+    );
+
+    return (
+      <a
+        {...rest}
+        target="_blank"
+        rel={[...safeRelParts].join(" ")}
+        className="text-accent underline underline-offset-4"
+      />
+    );
+  },
   pre: Pre,
 };
 

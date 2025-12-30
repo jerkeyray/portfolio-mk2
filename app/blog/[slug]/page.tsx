@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { Book } from "lucide-react";
 import { MDXContent } from "./MDXContent";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -10,19 +11,25 @@ export async function generateStaticParams() {
   }));
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.com";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
   const post = allPosts.find((post) => post.slug === slug);
   if (!post) return {};
 
   const postUrl = `${siteUrl}${post.url}`;
   const publishedTime = new Date(post.date).toISOString();
+
+  const ogImageCandidates = [
+    post.ogImage,
+    `/blog/${post.slug}/opengraph-image`,
+    "/opengraph-image",
+  ].filter(Boolean) as string[];
 
   return {
     title: post.title,
@@ -34,26 +41,18 @@ export async function generateMetadata({
       description: post.excerpt,
       publishedTime,
       authors: ["jerkeyray"],
-      images: [
-        {
-          url: `/images/blog/${post.slug}/og-image.png`, // Optional: per-post OG images
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-        {
-          url: "/og-image.png", // Fallback to default
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      images: ogImageCandidates.map((url) => ({
+        url,
+        width: 1200,
+        height: 630,
+        alt: post.title,
+      })),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      images: [`/images/blog/${post.slug}/og-image.png`, "/og-image.png"],
+      images: ogImageCandidates,
       creator: "@jerkeyray", // Update with your Twitter handle
     },
   };

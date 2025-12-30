@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { FaGithub, FaXTwitter, FaEnvelope, FaLinkedin } from "react-icons/fa6";
 import { SiLeetcode, SiHashnode, SiBuymeacoffee } from "react-icons/si";
-import Link from "next/link";
 
 const socials = [
   {

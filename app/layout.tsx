@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: "developer portfolio",
     images: [
       {
-        url: "/og-image.png", // Create this image (1200x630px)
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "jerkeyray",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "jerkeyray",
     description: "developer portfolio",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
     creator: "@jerkeyray", // Update with your Twitter handle
   },
   robots: {
