@@ -19,23 +19,24 @@ export const projects: Project[] = [
   {
     title: "Pika Language Interpreter",
     description:
-      "interpreter for a toy programming language written in go. built to learn parsing, evaluation and basic language design.",
-    tags: ["Go"],
+      "interpreter for my programming language written in go. built to learn parsing, evaluation and language design.",
+    tags: ["Go", "Interpreters", "Parsing"],
     repoLink: "https://github.com/jerkeyray/pika-interpreter.git",
   },
   {
     title: "Yudoku",
     description:
       "a focused learning web app that turns youtube playlists into structured, finite courses. designed around progress, flow, and completion rather than engagement.",
-    tags: [
-      "Typescript",
-      "Next.js",
-      "Supabase",
-      "Prisma",
-      "Tailwind CSS",
-    ],
+    tags: ["Typescript", "Next.js", "Supabase", "Prisma", "Tailwind CSS"],
     sourceLink: "https://yudoku.jerkeyray.com/",
     repoLink: "https://github.com/jerkeyray/yudoku",
+  },
+  {
+    title: "Walrus",
+    description:
+      "persistent key-value store in go with a custom write-ahead log. built to explore crash recovery, corruption handling, batching and log segmentation.",
+    tags: ["Go"],
+    repoLink: "https://github.com/jerkeyray/walrus.git",
   },
   {
     title: "Dory",
