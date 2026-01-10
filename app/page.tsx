@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { FaGithub, FaXTwitter, FaEnvelope, FaLinkedin } from "react-icons/fa6";
+import { FaGithub, FaXTwitter, FaEnvelope, FaLinkedin, FaCheck, FaFileArrowDown } from "react-icons/fa6";
 import { SiLeetcode, SiHashnode, SiBuymeacoffee } from "react-icons/si";
+import Link from "next/link";
 
 const socials = [
   {
@@ -23,12 +24,12 @@ const socials = [
     icon: FaLinkedin,
     hoverColor: "#0077B5",
   },
-  {
-    name: "LeetCode",
-    url: "https://leetcode.com/u/0tMezaewYp/",
-    icon: SiLeetcode,
-    hoverColor: "#FFA116",
-  },
+  // {
+  //   name: "LeetCode",
+  //   url: "https://leetcode.com/u/0tMezaewYp/",
+  //   icon: SiLeetcode,
+  //   hoverColor: "#FFA116",
+  // },
   {
     name: "Hashnode",
     url: "https://jerkeyray.hashnode.dev",
@@ -58,68 +59,73 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto flex flex-col justify-start md:justify-center min-h-screen pt-16 md:pt-0 pb-10 px-4">
-      <section className="space-y-4 md:space-y-6 lg:space-y-8">
+    <div className="max-w-3xl mx-auto flex flex-col justify-start md:justify-center min-h-screen pt-16 md:pt-0 pb-10 px-4 md:px-8 animate-in fade-in duration-700">
+      <section className="space-y-5 md:space-y-7">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">
           hi, i&apos;m aditya.
         </h1>
-        <div className="flex flex-wrap items-center gap-1.5 md:gap-3 text-[10px] md:text-sm font-medium text-muted-foreground">
-          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
+        <div className="flex flex-wrap items-center gap-2 text-[11px] md:text-sm font-medium">
+          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
             go
           </span>
-          <span className="text-muted-foreground/40 flex items-center">•</span>
-          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
-            backend systems
-          </span>
-          <span className="text-muted-foreground/40 flex items-center">•</span>
-          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
+          <span className="text-muted-foreground/30">•</span>
+          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
             distributed systems
           </span>
-          <span className="text-muted-foreground/40 flex items-center">•</span>
-          <span className="bg-muted/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded text-accent leading-none md:leading-tight">
-            developer tools
+          <span className="text-muted-foreground/30">•</span>
+          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
+            backend systems
+          </span>
+          <span className="text-muted-foreground/30">•</span>
+          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
+            db internals
           </span>
         </div>
 
-        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
+        <p className="text-sm md:text-lg text-muted-foreground/90 leading-relaxed">
           18 y/o pursuing bachelors in cs at vit vellore.
         </p>
 
-        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-          i learn by thinking from first principles, tinkering with the details
-          and abusing caffeine until things finally make sense. i mostly work
-          with <span className="text-accent">go</span>, exploring{" "}
-          <span className="text-foreground font-medium">backend systems</span>{" "}
-          through projects i build entirely from scratch —{" "}
-          <span className="text-foreground font-medium">interpreters</span>,{" "}
-          <span className="text-foreground font-medium">tiny data stores</span>,{" "}
-          <span className="text-foreground font-medium">rate limiters</span> and
-          other things that force me to understand what&apos;s actually going
-          on.
+        <p className="text-sm md:text-lg text-muted-foreground/90 leading-relaxed">
+          learning by thinking from first principles and digging into the details
+          until things make sense. mostly working with{" "}
+          <span className="text-accent font-medium">go</span>, building backend systems
+          from scratch—focusing on concurrency and system fundamentals.
         </p>
 
-        <div className="space-y-2 text-sm md:text-lg">
-          <p className="text-muted-foreground leading-relaxed">
-            <span className="text-accent font-medium">currently:</span>{" "}
-            exploring distributed systems, concurrency patterns and system
-            fundamentals.
+        <div className="space-y-2.5 text-sm md:text-lg">
+          <p className="text-muted-foreground/90 leading-relaxed">
+            <span className="text-accent font-semibold">currently:</span>{" "}
+            exploring distributed systems, concurrency, and database internals.
           </p>
 
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-muted-foreground/90 leading-relaxed">
+            i also write{" "}
+            <Link
+              href="/blog"
+              className="text-accent hover:text-accent/80 underline decoration-accent/50 hover:decoration-accent underline-offset-4 transition-all font-medium"
+            >
+              technical blogs
+            </Link>{" "}
+            about what i build and learn along the way.
+          </p>
+
+          <p className="text-muted-foreground/90 leading-relaxed">
             you can find my resume{" "}
             <a
               href="/aditya_srivastava_resume.pdf"
               download="aditya_srivastava_resume.pdf"
-              className="text-accent hover:text-accent/80 underline decoration-accent underline-offset-4 transition-colors"
+              className="inline-flex items-center gap-1.5 text-accent hover:text-accent/80 underline decoration-accent/50 hover:decoration-accent underline-offset-4 transition-all font-medium group"
             >
               here
+              <FaFileArrowDown className="text-sm group-hover:translate-y-0.5 transition-transform" />
             </a>
             .
           </p>
         </div>
       </section>
 
-      <div className="flex gap-4 pt-6 md:pt-8">
+      <div className="flex gap-5 pt-8 md:pt-10">
         {socials.map((social) => {
           const Icon = social.icon;
           return (
@@ -128,7 +134,7 @@ export default function Home() {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-all duration-200 hover:scale-110"
+              className="text-muted-foreground transition-all duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
               style={{
                 color: "currentColor",
               }}
@@ -136,6 +142,12 @@ export default function Home() {
                 e.currentTarget.style.color = "#f0a0c0";
               }}
               onMouseLeave={(e) => {
+                e.currentTarget.style.color = "";
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.color = "#f0a0c0";
+              }}
+              onBlur={(e) => {
                 e.currentTarget.style.color = "";
               }}
               aria-label={social.name}
@@ -146,7 +158,7 @@ export default function Home() {
         })}
         <button
           onClick={copyEmail}
-          className="text-muted-foreground transition-all duration-200 hover:scale-110 cursor-pointer flex items-center bg-transparent border-none p-0"
+          className="text-muted-foreground transition-all duration-300 hover:scale-110 focus:scale-110 cursor-pointer flex items-center bg-transparent border-none p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
           style={{
             color: emailCopied ? "#f0a0c0" : "currentColor",
           }}
@@ -157,13 +169,15 @@ export default function Home() {
           }}
           onMouseLeave={(e) => {
             if (!emailCopied) {
-              e.currentTarget.style.color = "";
+              e.currentTarget.style.color = "currentColor";
             }
           }}
-          aria-label="Copy email"
+          aria-label={emailCopied ? "Email copied" : "Copy email"}
         >
           {emailCopied ? (
-            <span className="text-sm">copied</span>
+            <span className="flex items-center gap-1.5 text-accent">
+              <FaCheck size={19} />
+            </span>
           ) : (
             <FaEnvelope size={25} />
           )}
