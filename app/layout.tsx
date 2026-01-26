@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
+import PikachuAnimation from "./components/PikachuAnimation";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -87,6 +88,7 @@ export default function RootLayout({
           <Navbar />
         </header>
         <main className="flex-1">{children}</main>
+        <PikachuAnimation />
         <Analytics />
       </body>
     </html>
