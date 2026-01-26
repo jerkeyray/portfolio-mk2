@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 type Pokemon = "pikachu" | "eevee" | "squirtle";
 
 export default function PikachuAnimation() {
+  const pathname = usePathname();
+
+  // Hide on blog pages
+  if (pathname?.startsWith("/blog/")) {
+    return null;
+  }
   const [currentPokemon, setCurrentPokemon] = useState<Pokemon>("pikachu");
   const [isLeaving, setIsLeaving] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
