@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 export default function ReadingProgress() {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const updateProgress = () => {
