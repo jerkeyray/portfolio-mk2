@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { Book } from "lucide-react";
 import { MDXContent } from "./MDXContent";
+import ReadingProgress from "@/app/components/ReadingProgress";
+import PostNavigation from "@/app/components/PostNavigation";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -89,25 +91,55 @@ export default async function BlogPost({
 
   const readTime = calculateReadTime(post.body.raw);
 
-  return (
-    <article className="space-y-8 max-w-3xl mx-auto pt-20">
-      <header className="space-y-2">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-          {post.title}
-        </h1>
-        <div className="flex items-center gap-4 text-sm text-muted">
-          <time dateTime={post.date}>
-            {format(new Date(post.date), "MMMM dd, yyyy")}
-          </time>
-          <span className="text-muted-foreground/60">•</span>
-          <span className="flex items-center gap-1.5">
-            <Book size={14} />
-            {readTime} min read
-          </span>
-        </div>
-      </header>
+  // Get all published posts sorted by date
+  const allPublishedPosts = allPosts
+    .filter((p) => p.published)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-      <MDXContent code={post.body.code} />
-    </article>
+  // Find current post index
+  const currentIndex = allPublishedPosts.findIndex((p) => p.slug === slug);
+
+  // Get previous and next posts
+  const nextPost =
+    currentIndex > 0
+      ? {
+          title: allPublishedPosts[currentIndex - 1].title,
+          url: allPublishedPosts[currentIndex - 1].url,
+        }
+      : undefined;
+
+  const prevPost =
+    currentIndex < allPublishedPosts.length - 1
+      ? {
+          title: allPublishedPosts[currentIndex + 1].title,
+          url: allPublishedPosts[currentIndex + 1].url,
+        }
+      : undefined;
+
+  return (
+    <>
+      <ReadingProgress />
+      <article className="space-y-8 max-w-3xl mx-auto pt-24">
+        <header className="space-y-2">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            {post.title}
+          </h1>
+          <div className="flex items-center gap-4 text-sm text-muted">
+            <time dateTime={post.date}>
+              {format(new Date(post.date), "MMMM dd, yyyy")}
+            </time>
+            <span className="text-muted-foreground/60">•</span>
+            <span className="flex items-center gap-1.5">
+              <Book size={14} />
+              {readTime} min read
+            </span>
+          </div>
+        </header>
+
+        <MDXContent code={post.body.code} />
+
+        <PostNavigation prevPost={prevPost} nextPost={nextPost} />
+      </article>
+    </>
   );
 }

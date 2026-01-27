@@ -6,6 +6,8 @@ export type Project = {
   sourceLink?: string;
   /** Optional link to the GitHub repo */
   repoLink?: string;
+  /** Optional status badge */
+  status?: "Active" | "Archived" | "In Progress";
 };
 
 export const projects: Project[] = [

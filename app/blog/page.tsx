@@ -55,7 +55,7 @@ export default function Blog() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto pt-20">
+    <div className="space-y-8 max-w-3xl mx-auto pt-24">
       <div className="flex items-center justify-between">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">blog</h1>
         <a

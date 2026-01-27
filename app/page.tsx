@@ -46,6 +46,7 @@ const socials = [
 
 export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const email = "srivastavya24@gmail.com";
 
   const copyEmail = async () => {
@@ -55,6 +56,8 @@ export default function Home() {
       setTimeout(() => setEmailCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy email:", err);
+      setEmailError(true);
+      setTimeout(() => setEmailError(false), 2000);
     }
   };
 
@@ -158,21 +161,23 @@ export default function Home() {
         })}
         <button
           onClick={copyEmail}
-          className="text-muted-foreground transition-all duration-300 hover:scale-110 focus:scale-110 cursor-pointer flex items-center bg-transparent border-none p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
+          className={`transition-all duration-300 hover:scale-110 focus:scale-110 cursor-pointer flex items-center bg-transparent border-none p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded ${
+            emailError ? "text-red-400 animate-pulse" : "text-muted-foreground"
+          }`}
           style={{
-            color: emailCopied ? "#f0a0c0" : "currentColor",
+            color: emailError ? "#f87171" : emailCopied ? "#f0a0c0" : "currentColor",
           }}
           onMouseEnter={(e) => {
-            if (!emailCopied) {
+            if (!emailCopied && !emailError) {
               e.currentTarget.style.color = "#f0a0c0";
             }
           }}
           onMouseLeave={(e) => {
-            if (!emailCopied) {
+            if (!emailCopied && !emailError) {
               e.currentTarget.style.color = "currentColor";
             }
           }}
-          aria-label={emailCopied ? "Email copied" : "Copy email"}
+          aria-label={emailError ? "Failed to copy email" : emailCopied ? "Email copied" : "Copy email"}
         >
           {emailCopied ? (
             <span className="flex items-center gap-1.5 text-accent">

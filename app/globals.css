@@ -6,7 +6,7 @@
   --foreground: #d4d4d4; /* Light gray text */
   --heading: #ebd1b7; /* Warm beige/off-white for headers */
   --accent: #f0a0c0; /* Soft pink for links */
-  --muted: #757575; /* Muted gray */
+  --muted: #8a8a8a; /* Muted gray - lightened for WCAG AA compliance */
   --cursor: #87c095; /* Green block cursor color */
 }
 
@@ -28,6 +28,17 @@ body {
   font-family: var(--font-geist-mono), "Courier New", Courier, monospace;
   -webkit-font-smoothing: antialiased;
   line-height: 1.65;
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Animations */
@@ -96,7 +107,7 @@ nav ul li a:hover:not(.text-accent) {
 /* MDX Prose Styling */
 .prose {
   color: var(--foreground);
-  max-width: 100ch; /* Wider reading width */
+  max-width: 75ch; /* Optimal reading width for better readability */
   line-height: 1.8;
   font-size: 0.9375rem; /* 15px base, smaller on mobile */
 }
@@ -176,13 +187,13 @@ nav ul li a:hover:not(.text-accent) {
 }
 
 .prose .anchor:hover {
-  color: var(--accent);
+  color: inherit;
   text-decoration: none;
 }
 
 /* Inline Code */
 .prose :not(pre) > code {
-  background: #212433;
+  background: #252525;
   color: #f5f6f7;
   padding: 0.25rem 0.45rem;
   border-radius: 0.3rem;
@@ -202,7 +213,7 @@ nav ul li a:hover:not(.text-accent) {
 }
 
 .prose .mdx-pre {
-  background: #282e3a;
+  background: #252525;
   border: 1px solid rgba(240, 160, 192, 0.3);
   box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.75);
 }
@@ -312,4 +323,11 @@ nav ul li a:hover:not(.text-accent) {
 .prose strong {
   font-weight: 700;
   color: var(--heading);
+}
+
+/* Enhanced focus indicators for accessibility */
+*:focus-visible {
+  outline: none;
+  ring: 3px solid var(--accent);
+  ring-offset: 2px;
 }

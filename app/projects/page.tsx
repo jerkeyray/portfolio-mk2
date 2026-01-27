@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <div className="space-y-8 max-w-6xl mx-auto pt-20">
+    <div className="space-y-8 max-w-5xl mx-auto pt-24">
       <h1 className="text-xl md:text-3xl font-bold tracking-tight">projects</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -51,7 +51,7 @@ export default function Projects() {
                 href={project.repoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute top-4 right-4 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:text-accent transition-all duration-300"
+                className="absolute top-4 right-4 opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:text-accent transition-all duration-300 focus:outline-none focus-visible:ring-3 focus-visible:ring-accent focus-visible:ring-offset-2 rounded"
                 aria-label={`${project.title} GitHub repository`}
               >
                 <Github size={20} />
@@ -86,7 +86,7 @@ export default function Projects() {
                 href={project.sourceLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-accent hover:text-accent/90 transition-colors inline-flex items-center gap-1.5"
+                className="text-sm px-3 py-1.5 rounded bg-accent/10 text-accent border border-accent/30 hover:bg-accent/20 hover:border-accent/50 transition-all inline-flex items-center gap-1.5 w-fit focus:outline-none focus-visible:ring-3 focus-visible:ring-accent focus-visible:ring-offset-2"
               >
                 live link
                 <ExternalLink size={14} />

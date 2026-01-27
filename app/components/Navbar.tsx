@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 
 const navItems = [
-  { name: "about", path: "/" },
+  { name: "home", path: "/" },
   { name: "blog", path: "/blog" },
   { name: "projects", path: "/projects" },
 ];
@@ -13,24 +13,15 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
   const lastScrollYRef = useRef(0);
+
+  // Pages with scroll behavior: blog pages (list and posts) and projects
   const isBlogPage = pathname.startsWith("/blog");
-  const isProjectsPage = pathname.startsWith("/projects");
-  const shouldUseScrollBehavior = isBlogPage || (isProjectsPage && isMobile);
+  const isProjectsPage = pathname === "/projects";
+
+  // Home page: always visible navbar
+  const shouldUseScrollBehavior = isBlogPage || isProjectsPage;
   const shouldBeTranslucent = isBlogPage || isProjectsPage;
-
-  useEffect(() => {
-    // Check if mobile on mount and resize
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     if (!shouldUseScrollBehavior) {
@@ -88,12 +79,13 @@ export default function Navbar() {
               <li key={item.path}>
                 <Link
                   href={item.path}
-                  className={`transition-all duration-200 inline-block ${
+                  className={`transition-all duration-200 inline-block focus:outline-none focus-visible:ring-3 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded ${
                     isActive
                       ? "text-accent font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:-translate-y-0.5"
                   }`}
                   style={isActive ? { color: "var(--accent)" } : undefined}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   {item.name}
                 </Link>
