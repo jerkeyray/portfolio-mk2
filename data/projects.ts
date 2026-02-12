@@ -34,6 +34,21 @@ export const projects: Project[] = [
     repoLink: "https://github.com/jerkeyray/yudoku",
   },
   {
+    title: "Cellory",
+    description:
+      "turns call recordings into auditable behavioral signals, compares successful vs failed outcomes and generates coaching playbooks to train future agents.",
+    tags: [
+      "Typescript",
+      "Next.js",
+      "Prisma",
+      "Neon",
+      "AI SDK",
+      "Whisper",
+    ],
+    sourceLink: "https://cellory.vercel.app",
+    repoLink: "https://github.com/jerkeyray/cellory.git",
+  },
+  {
     title: "Walrus",
     description:
       "persistent key-value store in go with a custom write-ahead log. built to explore crash recovery, corruption handling, batching and log segmentation.",
