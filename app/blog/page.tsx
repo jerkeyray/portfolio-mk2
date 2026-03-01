@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { ExternalLink, Book } from "lucide-react";
 import type { Metadata } from "next";
 
+
 function calculateReadTime(content: string): number {
   // Remove markdown syntax, code blocks, and HTML tags
   const text = content
@@ -55,7 +56,7 @@ export default function Blog() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <div className="animate-in fade-in duration-700 space-y-8 max-w-3xl mx-auto pt-24">
+    <div className="animate-in fade-in duration-700 space-y-6 md:space-y-8 max-w-3xl mx-auto pt-20 md:pt-24">
       <div className="flex items-center justify-between">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">blog</h1>
         <a
@@ -76,13 +77,13 @@ export default function Blog() {
             <Link 
               key={post.slug}
               href={post.url}
-              className="group block border border-muted/20 p-6 hover:border-accent hover:bg-muted/5 hover:shadow-[0_0_20px_-5px_rgba(240,160,192,0.15)] transition-all duration-300 hover:-translate-y-1 rounded-md"
+              className="group block border border-muted/20 p-4 md:p-6 hover:border-accent hover:bg-muted/5 hover:shadow-[0_0_20px_-5px_rgba(240,160,192,0.15)] transition-all duration-300 hover:-translate-y-1 rounded-md"
             >
               <article className="flex flex-col space-y-2">
-                <h2 className="text-lg md:text-xl font-bold group-hover:text-accent transition-colors">
+                <h2 className="text-base md:text-xl font-bold group-hover:text-accent transition-colors">
                   {post.title}
                 </h2>
-                <div className="flex items-center gap-4 text-sm text-muted">
+                <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm text-muted">
                   <time dateTime={post.date}>
                     {format(new Date(post.date), "MMMM dd, yyyy")}
                   </time>

@@ -64,13 +64,13 @@ export default function Navbar() {
       }`}
     >
       <div
-        className={`w-full py-6 flex flex-col items-center ${
+        className={`w-full py-4 md:py-6 flex flex-col items-center ${
           shouldBeTranslucent
             ? "bg-background/60 backdrop-blur-md"
             : "bg-background"
         }`}
       >
-        <ul className="flex gap-6 text-base">
+        <ul className="flex gap-4 text-sm md:gap-6 md:text-base">
           {navItems.map((item) => {
             const isActive =
               item.path === "/"

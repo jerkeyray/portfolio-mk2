@@ -3,6 +3,7 @@ import { Github, ExternalLink } from "lucide-react";
 import { projects } from "../../data/projects";
 import type { Metadata } from "next";
 
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.dev";
 
 export const metadata: Metadata = {
@@ -36,14 +37,14 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <div className="animate-in fade-in duration-700 space-y-8 max-w-5xl mx-auto pt-24">
+    <div className="animate-in fade-in duration-700 space-y-6 md:space-y-8 max-w-5xl mx-auto pt-20 md:pt-24">
       <h1 className="text-xl md:text-3xl font-bold tracking-tight">projects</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, index) => (
           <div
             key={index}
-            className="group relative border border-muted/20 p-6 hover:border-accent hover:bg-muted/5 hover:shadow-[0_0_20px_-5px_rgba(240,160,192,0.15)] transition-all duration-300 hover:-translate-y-1 flex flex-col rounded-md"
+            className="group relative border border-muted/20 p-4 md:p-6 hover:border-accent hover:bg-muted/5 hover:shadow-[0_0_20px_-5px_rgba(240,160,192,0.15)] transition-all duration-300 hover:-translate-y-1 flex flex-col rounded-md"
           >
             {/* GitHub icon in top right (clickable if repoLink exists) */}
             {project.repoLink && (
@@ -59,17 +60,17 @@ export default function Projects() {
             )}
 
             {/* Title */}
-            <h2 className="font-bold text-lg mb-3 pr-8 group-hover:text-accent transition-colors">
+            <h2 className="font-bold text-base md:text-lg mb-2 md:mb-3 pr-8 group-hover:text-accent transition-colors">
               {project.title}
             </h2>
 
             {/* Description */}
-            <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300 mb-4 grow">
+            <p className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300 mb-3 md:mb-4 grow">
               {project.description}
             </p>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
               {project.tags.map((tag, tagIndex) => (
                 <span
                   key={tagIndex}

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Database } from "lucide-react";
 import { SiBun, SiElevenlabs, SiGo, SiNextdotjs, SiResend, SiUpstash } from "react-icons/si";
 
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jerkeyray.dev";
 
 export const metadata: Metadata = {
@@ -132,7 +133,7 @@ export default function WorkPage() {
     });
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto pt-24 pb-10">
+    <div className="space-y-6 md:space-y-8 max-w-3xl mx-auto pt-20 md:pt-24 pb-8 md:pb-10">
       <header className="space-y-2">
         <h1 className="text-xl md:text-3xl font-bold tracking-tight">work</h1>
       </header>
@@ -142,10 +143,10 @@ export default function WorkPage() {
           work entries coming soon.
         </div>
       ) : (
-        <div className="relative space-y-6 pl-8">
+        <div className="relative space-y-4 md:space-y-6 pl-6 md:pl-8">
           {/* Timeline line with gradient fade */}
           <div
-            className="absolute left-[9px] top-2 bottom-2 w-px animate-timeline-line"
+            className="absolute left-[7px] md:left-[9px] top-2 bottom-2 w-px animate-timeline-line"
             style={{
               background:
                 "linear-gradient(to bottom, transparent, var(--accent) 10%, var(--muted) 50%, transparent 100%)",
@@ -164,12 +165,12 @@ export default function WorkPage() {
             return (
               <article
                 key={entry.slug}
-                className="animate-timeline-entry relative rounded-md border border-muted/20 p-6 transition-all duration-300 hover:border-accent hover:bg-muted/5 hover:shadow-[0_0_20px_-5px_rgba(240,160,192,0.15)]"
+                className="animate-timeline-entry relative rounded-md border border-muted/20 p-4 md:p-6 transition-all duration-300 hover:border-accent hover:bg-muted/5 hover:shadow-[0_0_20px_-5px_rgba(240,160,192,0.15)]"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 {/* Timeline dot */}
                 <span
-                  className={`absolute -left-[27px] top-7 h-3.5 w-3.5 rounded-full border-2 transition-colors ${
+                  className={`absolute -left-[23px] md:-left-[27px] top-6 md:top-7 h-3 w-3 md:h-3.5 md:w-3.5 rounded-full border-2 transition-colors ${
                     isPresent
                       ? "border-accent bg-accent shadow-[0_0_8px_rgba(240,160,192,0.4)]"
                       : "border-muted/50 bg-background"
@@ -180,11 +181,11 @@ export default function WorkPage() {
                   {/* Title & Company */}
                   <div className="flex flex-col gap-1">
                     <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-4">
-                      <h2 className="text-lg md:text-xl font-bold tracking-tight">
+                      <h2 className="text-base md:text-xl font-bold tracking-tight">
                         {entry.title}
                       </h2>
                     </div>
-                    <p className="text-accent text-sm md:text-base font-medium">
+                    <p className="text-accent text-xs md:text-base font-medium">
                       @{" "}
                       <span
                         className={entry.isCompanyBlurred ? "blur-sm select-none" : undefined}
@@ -217,7 +218,7 @@ export default function WorkPage() {
                       {details.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 text-xs text-accent/80 transition-colors hover:border-accent/40 hover:text-accent"
+                          className="inline-flex items-center gap-1 md:gap-1.5 rounded-full border border-accent/20 bg-accent/5 px-2 md:px-2.5 py-0.5 text-[10px] md:text-xs text-accent/80 transition-colors hover:border-accent/40 hover:text-accent"
                         >
                           {getTechIcon(tech)}
                           {tech}
@@ -227,17 +228,17 @@ export default function WorkPage() {
                   ) : null}
 
                   {/* Intro */}
-                  <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed">
+                  <p className="text-xs md:text-base text-muted-foreground/90 leading-relaxed">
                     {highlightImportant(details?.intro ?? entry.summary, highlightTerms)}
                   </p>
 
                   {/* Featured Project */}
                   {entry.featuredProjectTitle && entry.featuredProjectSummary ? (
                     <div className="mt-1 rounded-md border border-accent/20 bg-accent/5 p-3">
-                      <p className="text-sm font-semibold text-accent">
+                      <p className="text-xs md:text-sm font-semibold text-accent">
                         featured: {entry.featuredProjectTitle}
                       </p>
-                      <p className="text-sm text-muted-foreground/90 mt-1 leading-relaxed">
+                      <p className="text-xs md:text-sm text-muted-foreground/90 mt-1 leading-relaxed">
                         {entry.featuredProjectSummary}
                       </p>
                     </div>
@@ -245,7 +246,7 @@ export default function WorkPage() {
 
                   {/* Highlights */}
                   {details?.highlights?.length ? (
-                    <ul className="space-y-2 text-sm md:text-base text-muted-foreground/85 leading-relaxed">
+                    <ul className="space-y-1.5 md:space-y-2 text-xs md:text-base text-muted-foreground/85 leading-relaxed">
                       {details.highlights.map((highlight) => (
                         <li key={highlight} className="flex gap-2.5">
                           <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/50" />

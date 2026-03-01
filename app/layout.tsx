@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
 import PikachuAnimation from "./components/PikachuAnimation";
+import FloralOverlay from "./components/FloralOverlay";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -70,7 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased px-6 py-10 min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased px-4 py-6 md:px-6 md:py-10 min-h-screen flex flex-col`}
       >
         <Script
           async
@@ -93,6 +94,7 @@ export default function RootLayout({
         <header>
           <Navbar />
         </header>
+        <FloralOverlay />
         <main id="main-content" className="flex-1">{children}</main>
         <PikachuAnimation />
         <Analytics />
