@@ -8,6 +8,7 @@ const navItems = [
   { name: "home", path: "/" },
   { name: "blog", path: "/blog" },
   { name: "projects", path: "/projects" },
+  { name: "work", path: "/work" },
 ];
 
 export default function Navbar() {
@@ -18,10 +19,11 @@ export default function Navbar() {
   // Pages with scroll behavior: blog pages (list and posts) and projects
   const isBlogPage = pathname.startsWith("/blog");
   const isProjectsPage = pathname === "/projects";
+  const isWorkPage = pathname === "/work";
 
   // Home page: always visible navbar
-  const shouldUseScrollBehavior = isBlogPage || isProjectsPage;
-  const shouldBeTranslucent = isBlogPage || isProjectsPage;
+  const shouldUseScrollBehavior = isBlogPage || isProjectsPage || isWorkPage;
+  const shouldBeTranslucent = isBlogPage || isProjectsPage || isWorkPage;
 
   useEffect(() => {
     if (!shouldUseScrollBehavior) {

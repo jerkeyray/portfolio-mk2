@@ -2,46 +2,15 @@
 
 import { useState } from "react";
 import { FaGithub, FaXTwitter, FaEnvelope, FaLinkedin, FaCheck, FaFileArrowDown } from "react-icons/fa6";
-import { SiLeetcode, SiHashnode, SiBuymeacoffee } from "react-icons/si";
+import { SiHashnode, SiBuymeacoffee } from "react-icons/si";
 import Link from "next/link";
 
 const socials = [
-  {
-    name: "GitHub",
-    url: "https://github.com/jerkeyray",
-    icon: FaGithub,
-    hoverColor: "#9333EA",
-  },
-  {
-    name: "X",
-    url: "https://x.com/jerkeyray",
-    icon: FaXTwitter,
-    hoverColor: "#1DA1F2",
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/aditya-srivastava-a943a8321/",
-    icon: FaLinkedin,
-    hoverColor: "#0077B5",
-  },
-  // {
-  //   name: "LeetCode",
-  //   url: "https://leetcode.com/u/0tMezaewYp/",
-  //   icon: SiLeetcode,
-  //   hoverColor: "#FFA116",
-  // },
-  {
-    name: "Hashnode",
-    url: "https://jerkeyray.hashnode.dev",
-    icon: SiHashnode,
-    hoverColor: "#2962FF",
-  },
-  {
-    name: "Buy Me a Coffee",
-    url: "https://www.buymeacoffee.com/jerkeyray",
-    icon: SiBuymeacoffee,
-    hoverColor: "#FFDD00",
-  },
+  { name: "GitHub", url: "https://github.com/jerkeyray", icon: FaGithub },
+  { name: "X", url: "https://x.com/jerkeyray", icon: FaXTwitter },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/aditya-srivastava-a943a8321/", icon: FaLinkedin },
+  { name: "Hashnode", url: "https://jerkeyray.hashnode.dev", icon: SiHashnode },
+  { name: "Buy Me a Coffee", url: "https://www.buymeacoffee.com/jerkeyray", icon: SiBuymeacoffee },
 ];
 
 export default function Home() {
@@ -62,48 +31,63 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto flex flex-col justify-start md:justify-center min-h-screen pt-16 md:pt-0 pb-10 px-4 md:px-8 animate-in fade-in duration-700">
+    <div className="max-w-3xl mx-auto flex flex-col justify-start md:justify-center min-h-screen pt-16 md:pt-0 pb-10 px-4 md:px-8">
       <section className="space-y-5 md:space-y-7">
-        <h1 className="text-xl md:text-3xl font-bold tracking-tight">
+        <h1
+          className="animate-stagger text-xl md:text-3xl font-bold tracking-tight"
+          style={{ animationDelay: "0ms" }}
+        >
           hi, i&apos;m aditya.
         </h1>
-        <div className="flex flex-wrap items-center gap-2 text-[11px] md:text-sm font-medium">
-          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
-            go
-          </span>
-          <span className="text-muted-foreground/30">•</span>
-          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
-            distributed systems
-          </span>
-          <span className="text-muted-foreground/30">•</span>
-          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
-            backend systems
-          </span>
-          <span className="text-muted-foreground/30">•</span>
-          <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90">
-            db internals
-          </span>
+
+        <div
+          className="animate-stagger flex flex-wrap items-center gap-2 text-[11px] md:text-sm font-medium"
+          style={{ animationDelay: "100ms" }}
+        >
+          {["go", "distributed systems", "ai infra", "db internals"].map((tag, i) => (
+            <span key={tag} className="flex items-center gap-2">
+              {i > 0 && <span className="text-muted-foreground/30">•</span>}
+              <span className="bg-accent/10 px-2 py-0.5 md:px-2.5 md:py-1 rounded border border-accent/20 text-accent/90 transition-all duration-200 hover:bg-accent/20 hover:border-accent/40 cursor-default">
+                {tag}
+              </span>
+            </span>
+          ))}
         </div>
 
-        <p className="text-sm md:text-lg text-muted-foreground/90 leading-relaxed">
-          18 y/o pursuing bachelors in cs at vit vellore.
-        </p>
-
-        <p className="text-sm md:text-lg text-muted-foreground/90 leading-relaxed">
-          learning by thinking from first principles and digging into the details
-          until things make sense. mostly working with{" "}
-          <span className="text-accent font-medium">go</span>, building backend systems
-          from scratch—focusing on concurrency and system fundamentals.
-        </p>
-
-        <div className="space-y-2.5 text-sm md:text-lg">
-          <p className="text-muted-foreground/90 leading-relaxed">
-            <span className="text-accent font-semibold">currently:</span>{" "}
-            exploring distributed systems, concurrency, and database internals.
+        <div
+          className="animate-stagger space-y-4"
+          style={{ animationDelay: "200ms" }}
+        >
+          <p className="text-sm md:text-lg text-muted-foreground/90 leading-relaxed">
+            cs undergrad working on production{" "}
+            <span className="text-accent font-medium">backend</span> and{" "}
+            <span className="text-accent font-medium">ai systems</span>.
           </p>
 
+          <p className="text-sm md:text-lg text-muted-foreground/90 leading-relaxed">
+            i learn by thinking from{" "}
+            <span className="text-accent font-medium">first principles</span> and
+            digging into the details until things make sense — mostly working with{" "}
+            <span className="text-accent font-medium">go</span>, building backend systems
+            from scratch, focusing on{" "}
+            <span className="text-accent font-medium">concurrency</span> and system
+            fundamentals.
+          </p>
+        </div>
+
+        <div
+          className="animate-stagger space-y-2.5 text-sm md:text-lg"
+          style={{ animationDelay: "300ms" }}
+        >
           <p className="text-muted-foreground/90 leading-relaxed">
-            i also write{" "}
+            currently building at{" "}
+            <Link
+              href="/work"
+              className="text-accent hover:text-accent/80 underline decoration-accent/50 hover:decoration-accent underline-offset-4 transition-all font-medium"
+            >
+              work
+            </Link>
+            . i also write{" "}
             <Link
               href="/blog"
               className="text-accent hover:text-accent/80 underline decoration-accent/50 hover:decoration-accent underline-offset-4 transition-all font-medium"
@@ -128,7 +112,10 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flex gap-5 pt-8 md:pt-10">
+      <div
+        className="animate-stagger flex items-center gap-5 pt-8 md:pt-10"
+        style={{ animationDelay: "400ms" }}
+      >
         {socials.map((social) => {
           const Icon = social.icon;
           return (
@@ -137,52 +124,29 @@ export default function Home() {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-all duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
-              style={{
-                color: "currentColor",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#f0a0c0";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "";
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.color = "#f0a0c0";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.color = "";
-              }}
+              className="text-muted-foreground hover:text-accent transition-all duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
               aria-label={social.name}
             >
               <Icon size={25} />
             </a>
           );
         })}
+
+        <span className="h-5 w-px bg-muted/30" />
+
         <button
           onClick={copyEmail}
           className={`transition-all duration-300 hover:scale-110 focus:scale-110 cursor-pointer flex items-center bg-transparent border-none p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded ${
-            emailError ? "text-red-400 animate-pulse" : "text-muted-foreground"
+            emailError
+              ? "text-red-400 animate-pulse"
+              : emailCopied
+                ? "text-accent"
+                : "text-muted-foreground hover:text-accent"
           }`}
-          style={{
-            color: emailError ? "#f87171" : emailCopied ? "#f0a0c0" : "currentColor",
-          }}
-          onMouseEnter={(e) => {
-            if (!emailCopied && !emailError) {
-              e.currentTarget.style.color = "#f0a0c0";
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!emailCopied && !emailError) {
-              e.currentTarget.style.color = "currentColor";
-            }
-          }}
           aria-label={emailError ? "Failed to copy email" : emailCopied ? "Email copied" : "Copy email"}
         >
           {emailCopied ? (
-            <span className="flex items-center gap-1.5 text-accent">
-              <FaCheck size={19} />
-            </span>
+            <FaCheck size={19} />
           ) : (
             <FaEnvelope size={25} />
           )}

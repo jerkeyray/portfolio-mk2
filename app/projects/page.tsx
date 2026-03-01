@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <div className="space-y-8 max-w-5xl mx-auto pt-24">
+    <div className="animate-in fade-in duration-700 space-y-8 max-w-5xl mx-auto pt-24">
       <h1 className="text-xl md:text-3xl font-bold tracking-tight">projects</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -43,9 +43,76 @@ export const Post = defineDocumentType(() => ({
   },
 }));
 
+export const WorkEntry = defineDocumentType(() => ({
+  name: "WorkEntry",
+  filePathPattern: `work/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    company: {
+      type: "string",
+      required: true,
+    },
+    isCompanyBlurred: {
+      type: "boolean",
+      required: false,
+    },
+    dateStart: {
+      type: "date",
+      required: true,
+    },
+    dateEnd: {
+      type: "string",
+      required: true,
+    },
+    location: {
+      type: "string",
+      required: false,
+    },
+    employmentType: {
+      type: "string",
+      required: false,
+    },
+    summary: {
+      type: "string",
+      required: true,
+    },
+    featuredProjectTitle: {
+      type: "string",
+      required: false,
+    },
+    featuredProjectSummary: {
+      type: "string",
+      required: false,
+    },
+    order: {
+      type: "number",
+      required: false,
+    },
+    published: {
+      type: "boolean",
+      default: true,
+    },
+  },
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (entry) => entry._raw.flattenedPath.replace("work/", ""),
+    },
+    url: {
+      type: "string",
+      resolve: (entry) =>
+        `/work/${entry._raw.flattenedPath.replace("work/", "")}`,
+    },
+  },
+}));
+
 export default makeSource({
   contentDirPath: "./content",
-  documentTypes: [Post],
+  documentTypes: [Post, WorkEntry],
   mdx: {
     rehypePlugins: [
       rehypeSlug,

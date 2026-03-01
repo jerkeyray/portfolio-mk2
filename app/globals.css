@@ -63,6 +63,52 @@ body {
   animation-duration: 700ms;
 }
 
+/* Work timeline animations */
+@keyframes timeline-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes timeline-line-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-stagger {
+  animation: stagger-in 0.5s ease-out both;
+}
+
+.animate-timeline-entry {
+  animation: timeline-slide-in 0.5s ease-out both;
+}
+
+.animate-timeline-line {
+  animation: timeline-line-grow 0.8s ease-out both;
+  transform-origin: top;
+}
+
+
 h1,
 h2,
 h3,
