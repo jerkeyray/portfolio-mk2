@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState, useRef, type TouchEvent } from "react";
 
 const navItems = [
   { name: "home", path: "/" },
@@ -13,8 +13,11 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const lastScrollYRef = useRef(0);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Pages with scroll behavior: blog pages (list and posts) and projects
   const isBlogPage = pathname.startsWith("/blog");
@@ -55,8 +58,57 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [shouldUseScrollBehavior]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+  }, []);
+
+  const getActiveIndex = () => {
+    return navItems.findIndex((item) =>
+      item.path === "/" ? pathname === "/" : pathname.startsWith(item.path)
+    );
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLElement>) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLElement>) => {
+    if (!isMobile) return;
+
+    const touchStart = touchStartRef.current;
+    const touch = event.changedTouches[0];
+    touchStartRef.current = null;
+
+    if (!touchStart || !touch) return;
+
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(deltaX) < minSwipeDistance || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) {
+      return;
+    }
+
+    const activeIndex = getActiveIndex();
+    if (activeIndex === -1) return;
+
+    const direction = deltaX < 0 ? 1 : -1;
+    const nextIndex = Math.min(Math.max(activeIndex + direction, 0), navItems.length - 1);
+    if (nextIndex !== activeIndex) {
+      router.push(navItems[nextIndex].path);
+    }
+  };
+
   return (
     <nav
+      onTouchStart={isMobile ? handleTouchStart : undefined}
+      onTouchEnd={isMobile ? handleTouchEnd : undefined}
       className={`flex flex-col items-center transition-all duration-300 fixed top-0 left-0 right-0 z-50 ${
         shouldUseScrollBehavior && !isVisible
           ? "opacity-0 -translate-y-full pointer-events-none"

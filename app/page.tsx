@@ -1,15 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { FaGithub, FaXTwitter, FaEnvelope, FaLinkedin, FaCheck, FaFileArrowDown } from "react-icons/fa6";
-import { SiHashnode, SiBuymeacoffee } from "react-icons/si";
+import { FaGithub, FaXTwitter, FaEnvelope, FaLinkedin, FaFileArrowDown } from "react-icons/fa6";
+import { SiBuymeacoffee } from "react-icons/si";
 import Link from "next/link";
 
 const socials = [
   { name: "GitHub", url: "https://github.com/jerkeyray", icon: FaGithub },
   { name: "X", url: "https://x.com/jerkeyray", icon: FaXTwitter },
   { name: "LinkedIn", url: "https://www.linkedin.com/in/aditya-srivastava-a943a8321/", icon: FaLinkedin },
-  { name: "Hashnode", url: "https://jerkeyray.hashnode.dev", icon: SiHashnode },
   { name: "Buy Me a Coffee", url: "https://www.buymeacoffee.com/jerkeyray", icon: SiBuymeacoffee },
 ];
 
@@ -31,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative max-w-3xl mx-auto flex flex-col justify-center flex-1 pb-8 md:pb-10 px-2 md:px-8">
+    <div className="relative max-w-3xl mx-auto flex flex-col justify-center flex-1 pb-12 md:pb-10 px-2 md:px-8">
       <section className="space-y-4 md:space-y-7">
         <h1
           className="animate-stagger text-xl md:text-3xl font-bold tracking-tight"
@@ -101,7 +100,8 @@ export default function Home() {
             you can find my resume{" "}
             <a
               href="/aditya_srivastava_resume.pdf"
-              download="aditya_srivastava_resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-accent hover:text-accent/80 underline decoration-accent/50 hover:decoration-accent underline-offset-4 transition-all font-medium group"
             >
               here
@@ -141,12 +141,12 @@ export default function Home() {
               ? "text-red-400 animate-pulse"
               : emailCopied
                 ? "text-accent"
-                : "text-muted-foreground hover:text-accent"
+                : "text-foreground/90 hover:text-accent"
           }`}
           aria-label={emailError ? "Failed to copy email" : emailCopied ? "Email copied" : "Copy email"}
         >
           {emailCopied ? (
-            <FaCheck className="size-4 md:size-[19px]" />
+            <span className="text-[10px] md:text-xs font-medium leading-none">email copied</span>
           ) : (
             <FaEnvelope className="size-5 md:size-[25px]" />
           )}
