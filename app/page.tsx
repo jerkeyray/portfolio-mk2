@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative max-w-3xl mx-auto flex flex-col justify-center flex-1 pb-12 md:pb-10 px-2 md:px-8">
+    <div className="relative max-w-3xl mx-auto flex flex-col justify-center flex-1 min-h-[calc(100svh-7rem)] md:min-h-0 pb-6 md:pb-10 px-2 md:px-8">
       <section className="space-y-4 md:space-y-7">
         <h1
           className="animate-stagger text-xl md:text-3xl font-bold tracking-tight"
