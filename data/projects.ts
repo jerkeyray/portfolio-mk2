@@ -49,6 +49,13 @@ export const projects: Project[] = [
     repoLink: "https://github.com/jerkeyray/cellory.git",
   },
   {
+    title: "Heimdall",
+    description:
+      "minimal llm streaming proxy in go that normalizes provider events into a single sse stream with token usage and latency metrics.",
+    tags: ["Go"],
+    repoLink: "https://github.com/jerkeyray/heimdall",
+  },
+  {
     title: "Walrus",
     description:
       "persistent key-value store in go with a custom write-ahead log. built to explore crash recovery, corruption handling, batching and log segmentation.",
